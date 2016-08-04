@@ -1,5 +1,5 @@
 {
-  "name": "seed-element",
+  "name": "fort-icon",
   "version": "1.0.0",
   "authors": [
     "Anonymous <anonymous@example.com>"
@@ -11,9 +11,9 @@
     "seed"
   ],
   "private": true,
-  "main": "seed-element.html",
+  "main": "fort-icon.html",
   "license": "MIT",
-  "homepage": "https://github.com/FortifiElements/seed-element/",
+  "homepage": "https://github.com/FortifiElements/fort-icon/",
   "ignore": [
     "/.*",
     "/test/",
@@ -21,7 +21,9 @@
     "/node_modules/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.6.0"
+    "polymer": "Polymer/polymer#^1.6.1",
+    "paper-tooltip": "1.1.2",
+    "material-iconfont": "^2.2.3"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

@@ -1,39 +1,60 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>seed-element Demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-    <link rel="import" href="../seed-element.html">
-  </head>
-  <body unresolved>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>fort-icon Demo</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <link rel="import" href="../fort-icon.html">
+</head>
+<body unresolved>
 
-    <p>An example of <code>&lt;seed-element&gt;</code>:</p>
+<div>
+  <p>An example of <code>&lt;fort-icon&gt;</code>:</p>
 
-    <p>Make words! <button id="saybtn">Say Something</button></p>
-    <p>Make lasers! <button id="laserbtn">Fire lasers</button></p>
+  <div>
+    <p>iron-icons. Dynamically importing icon group html file</p>
+    <fort-icon icon="iron:icons:add" size="48" alt="add"></fort-icon>
+    <fort-icon icon="iron:social:cake" size="48" alt="cake"></fort-icon>
+    <fort-icon icon="iron:places:ac-unit" size="48" alt="ac unit"></fort-icon>
+  </div>
 
-    <seed-element author='{"name": "Lord Meowser", "image": "http://lorempixel.com/g/300/200/cats/"}' fancy>
-      <h2>Hello seed-element</h2>
-    </seed-element>
+  <div>
+    <p>Material Icons</p>
+    <fort-icon icon="material:accessibility" size="48"></fort-icon>
+    <fort-icon icon="material:3d_rotation" size="48"></fort-icon>
+    <fort-icon icon="material:autorenew" size="48"></fort-icon>
+    <fort-icon icon="material:camera_enhance" size="48"></fort-icon>
+    <fort-icon icon="material:flight_land" size="48"></fort-icon>
+  </div>
 
-    <script>
-      var seedElement = document.querySelector('seed-element');
+  <div>
+    <p>Project specific assets using <code>src</code> attribute</p>
+    <fort-icon src="mario.png" size="48"></fort-icon>
+    <fort-icon src="mario_logo.svg" size="48"></fort-icon>
+    <fort-icon src="fortifi-logo.svg" size="48"></fort-icon>
+  </div>
 
-      document.querySelector('#saybtn').addEventListener('click', function() {
-        alert(seedElement.sayHello('Hallo!'));
-      });
+  <div>
+    <p>Direct svg code usage</p>
 
-      document.querySelector('#laserbtn').addEventListener('click', function() {
-        seedElement.fireLasers();
-      });
+    <fort-icon size="100">
+      <svg viewBox="0 0 770.048 889.175">
+        <polygon fill="#424e63"
+                 points="0 666.881 385.024 889.175 770.048 666.881 770.048 222.294 385.024 0 0 222.294 0 666.881"></polygon>
+        <path fill="#394457"
+              d="M388,3.913L773.024,226.206V670.794L388,893.087V3.913Z"
+              transform="translate(-2.976 -3.913)"></path>
+        <path fill="#fff"
+              d="M676.982,281.778L576.95,224.571V285.7L476.917,244.076v-77.8L388,115.061l-88.917,51.213v77.8L199.05,285.7V224.571L99.018,281.778V615.219l111.147,64.159V581.872c0-33.624,15.087-58.632,33.373-55.573s33.315,33.065,33.315,66.688V717.75L388,781.92v0l288.982-166.7V281.778Z"
+              transform="translate(-2.976 -3.913)"></path>
+        <polygon fill="#e8e9eb"
+                 points="674.006 277.865 573.974 220.659 573.974 281.789 473.941 240.163 473.941 162.361 385.024 111.148 385.024 778.007 385.024 778.024 385.024 778.015 385.024 778.024 385.024 778.007 674.006 611.306 674.006 277.865"></polygon>
+      </svg>
+    </fort-icon>
+  </div>
 
-      document.addEventListener("seed-element-lasers", function(e) {
-        console.log(e.detail.sound);
-      });
+</div>
 
-    </script>
-
-  </body>
+</body>
 </html>
