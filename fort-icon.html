@@ -18,12 +18,12 @@ Example:
 @hero hero.svg
 -->
 
-<dom-module id="fort-icon" attributes="size icon src alt">
+<dom-module id="fort-icon" attributes="size alt">
   <style>
     :host {
-    --fort-icon-size: 24px;
-    --iron-icon-width:var(--fort-icon-size, 24px);
-    --iron-icon-height:var(--fort-icon-size, 24px);
+      --fort-icon-size: 24px;
+      --iron-icon-width: var(--fort-icon-size, 24px);
+      --iron-icon-height: var(--fort-icon-size, 24px);
 
       width: var(--fort-icon-size, 24px);
       height: var(--fort-icon-size, 24px);
@@ -36,16 +36,20 @@ Example:
   </style>
 
   <template>
-    <template is="dom-if" if="{{_isSvg()}}">
-      <content select=""></content>
+    <template is="dom-if" if="{{_isType('svg')}}">
+      <content select="svg"></content>
     </template>
 
-    <template is="dom-if" if="{{_isIron()}}">
-      <iron-icon id="iron-icon" src="{{src}}" icon="{{icon}}" class="{{class}}"></iron-icon>
+    <template is="dom-if" if="{{_isType('iron')}}">
+      <iron-icon icon="[[_icon]]"></iron-icon>
     </template>
 
-    <template is="dom-if" if="{{_isMaterial()}}">
-      <i id="material-icon" class="material-icons">[[_icon]]</i>
+    <template is="dom-if" if="{{_isType('url')}}">
+      <iron-icon src="[[_icon]]"></iron-icon>
+    </template>
+
+    <template is="dom-if" if="{{_isType('material')}}">
+      <i class="material-icons">[[_icon]]</i>
     </template>
 
     <template is="dom-if" if="[[alt]]">
@@ -56,12 +60,8 @@ Example:
   <script>
     Polymer(
       {
-        is:              'fort-icon',
-        properties:      {
-          icon: {
-            type:     String,
-            observer: '_iconChanged'
-          },
+        is:           'fort-icon',
+        properties:   {
           size: {
             type:     String,
             value:    '24',
@@ -70,68 +70,72 @@ Example:
           src:  String,
           alt:  String
         },
-        attached:        function ()
-                             {
-                               // strip width/height from svg to allow it to scale to [[size]]
-                               var svg = this.queryEffectiveChildren('svg');
-                               if(svg)
-                               {
-                                 svg.style.width = '100%';
-                                 svg.style.height = '100%';
+        _type:        '',
+        _icon:        '',
+        _sizeChanged: function ()
+                      {
+                        // remove any non-numeric characters, ready to append px for styles
+                        this.size = this.size.replace(/\D/g, '');
 
-                                 if(svg.hasAttribute('width'))
-                                 {
-                                   svg.removeAttribute('width');
-                                 }
+                        this.customStyle['--fort-icon-size'] = this.size + 'px';
+                        this.updateStyles();
+                      },
+        _isType:      function (type)
+                      {
+                        if(!this._type)
+                        {
+                          if(this.getEffectiveChildren().length == 0)
+                          {
+                            var content = this.getEffectiveTextContent().trim();
+                            var match = content.match(/^(iron|material):(.+)$/);
+                            if(match)
+                            {
+                              this._type = match[1];
+                              this._icon = match[2];
+                            }
+                            else
+                            {
+                              this._type = 'url';
+                              this._icon = content;
+                            }
+                          }
+                          else
+                          {
+                            this._type = 'svg';
+                            // strip width/height from svg to allow it to scale to [[size]]
+                            this._icon = this.queryEffectiveChildren('svg');
+                            if(this._icon)
+                            {
+                              this._icon.style.width = '100%';
+                              this._icon.style.height = '100%';
 
-                                 if(svg.hasAttribute('height'))
-                                 {
-                                   svg.removeAttribute('height');
-                                 }
-                               }
-                             },
-        _iconChanged:    function ()
-                             {
-                               var iconSplit = this.icon.split(':');
-                               this._icon = iconSplit.slice(1).join(':');
-                               switch(iconSplit[0])
-                               {
-                                 case 'iron':
-                                   if(iconSplit.length !== 3)
-                                   {
-                                     return console.info(
-                                       'icon (' + icon[0] + ') should provide 3 parts; library:group:name'
-                                     );
-                                   }
-                                   var iconGroup = iconSplit[1] == 'icons' ? 'iron' : iconSplit[1];
-                                   this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
-                                   break;
+                              if(this._icon.hasAttribute('width'))
+                              {
+                                this._icon.removeAttribute('width');
+                              }
 
-                                 case 'material':
-                                   this.importHref(this.resolveUrl('material-icons.html'));
-                                   break;
-                               }
-                             },
-        _sizeChanged:    function ()
-                             {
-                               // remove any non-numeric characters, ready to append px for styles
-                               this.size = this.size.replace(/\D/g, '');
+                              if(this._icon.hasAttribute('height'))
+                              {
+                                this._icon.removeAttribute('height');
+                              }
+                            }
+                          }
 
-                               this.customStyle['--fort-icon-size'] = this.size + 'px';
-                               this.updateStyles();
-                             },
-        _isSvg:          function ()
-                             {
-                               return !!this.queryEffectiveChildren('svg');
-                             },
-        _isIron:         function ()
-                             {
-                               return /^iron:/.exec(this.getAttribute('icon')) || this.hasAttribute('src');
-                             },
-        _isMaterial:     function ()
-                             {
-                               return /^material:/.exec(this.getAttribute('icon'));
-                             }
+                          if(this._type == 'iron')
+                          {
+                            var iconSplit = this._icon.split(':');
+                            var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
+                            this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
+                          }
+
+                          if(this._type == 'material')
+                          {
+                            this.importHref(this.resolveUrl('material-icons.html'));
+                          }
+                        }
+
+                        return this._type == type;
+                      }
       }
     );
   </script>
