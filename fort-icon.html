@@ -40,16 +40,12 @@ Example:
       <content select="svg"></content>
     </template>
 
-    <template is="dom-if" if="{{_isType('iron')}}">
+    <template is="dom-if" if="{{_isType('icon')}}">
       <iron-icon icon="[[_icon]]"></iron-icon>
     </template>
 
     <template is="dom-if" if="{{_isType('url')}}">
       <iron-icon src="[[_icon]]"></iron-icon>
-    </template>
-
-    <template is="dom-if" if="{{_isType('material')}}">
-      <i class="material-icons">[[_icon]]</i>
     </template>
 
     <template is="dom-if" if="[[alt]]">
@@ -86,18 +82,8 @@ Example:
                         {
                           if(this.getEffectiveChildren().length == 0)
                           {
-                            var content = this.getEffectiveTextContent().trim();
-                            var match = content.match(/^(iron|material):(.+)$/);
-                            if(match)
-                            {
-                              this._type = match[1];
-                              this._icon = match[2];
-                            }
-                            else
-                            {
-                              this._type = 'url';
-                              this._icon = content;
-                            }
+                            this._icon = this.getEffectiveTextContent().trim();
+                            this._type = this._icon.indexOf('.') != -1 ? 'url' : 'icon';
                           }
                           else
                           {
@@ -121,19 +107,14 @@ Example:
                             }
                           }
 
-                          if(this._type == 'iron')
+                          if(this._type == 'icon')
                           {
                             var iconSplit = this._icon.split(':');
                             var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
                             this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
                           }
-
-                          if(this._type == 'material')
-                          {
-                            this.importHref(this.resolveUrl('material-icons.html'));
-                          }
                         }
-
+                        console.log(this._type, type, this._icon);
                         return this._type == type;
                       }
       }
