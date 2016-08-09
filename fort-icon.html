@@ -71,7 +71,8 @@ Example:
         _sizeChanged: function ()
                       {
                         // remove any non-numeric characters, ready to append px for styles
-                        this.size = this.size.replace(/\D/g, '');
+                        var defaultSize = this.properties.size.value;
+                        this.size = (this.size || defaultSize).replace(/\D/g, '') || defaultSize;
 
                         this.customStyle['--fort-icon-size'] = this.size + 'px';
                         this.updateStyles();
