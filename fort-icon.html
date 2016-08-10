@@ -18,7 +18,7 @@ Example:
 @hero hero.svg
 -->
 
-<dom-module id="fort-icon" attributes="size alt">
+<dom-module id="fort-icon" attributes="size alt color background">
   <style>
     :host {
       --fort-icon-size: 24px;
@@ -29,6 +29,13 @@ Example:
       height: var(--fort-icon-size, 24px);
       display: inline-block;
       line-height: 1em;
+      border-color: var(--fort-icon-background-color);
+      background-color: var(--fort-icon-background-color);
+      color: var(--fort-icon-color);
+    }
+
+    :host ::content svg {
+      fill: currentColor;
     }
 
     i {
@@ -57,13 +64,23 @@ Example:
       {
         is:           'fort-icon',
         properties:   {
-          size: {
+          size:       {
             type:     String,
             value:    '24',
             observer: '_sizeChanged'
           },
-          src:  String,
-          alt:  String
+          background: {
+            type:     String,
+            value:    '24',
+            observer: '_sizeChanged'
+          },
+          color:      {
+            type:     String,
+            value:    '24',
+            observer: '_sizeChanged'
+          },
+          src:        String,
+          alt:        String
         },
         _icon:        '',
         _url:         '',
@@ -78,6 +95,8 @@ Example:
                         this.size = (this.size || defaultSize).replace(/\D/g, '') || defaultSize;
 
                         this.customStyle['--fort-icon-size'] = this.size + 'px';
+                        this.customStyle['--fort-icon-background-color'] = this.background;
+                        this.customStyle['--fort-icon-color'] = this.color;
                         this.updateStyles();
                       },
         _updateType:  function ()
