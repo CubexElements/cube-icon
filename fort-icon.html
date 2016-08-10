@@ -85,7 +85,7 @@ Example:
                         this._icon = this._url = '';
                         if(this.getEffectiveChildren().length == 0)
                         {
-                          var text = this.getEffectiveTextContent();
+                          var text = this.getEffectiveTextContent().trim();
                           if(text.indexOf('.') == -1)
                           {
                             this._icon = text;
