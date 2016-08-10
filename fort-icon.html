@@ -37,16 +37,14 @@ Example:
   </style>
 
   <template strip-whitespace>
-    <template is="dom-if" if="{{_isType('svg')}}">
-      <content select="svg"></content>
-    </template>
+    <content select="svg"></content>
 
-    <template is="dom-if" if="{{_isType('icon')}}">
+    <template is="dom-if" if="{{_icon}}">
       <iron-icon icon="[[_icon]]"></iron-icon>
     </template>
 
-    <template is="dom-if" if="{{_isType('url')}}">
-      <iron-icon src="[[_icon]]"></iron-icon>
+    <template is="dom-if" if="{{_url}}">
+      <iron-icon src="[[_url]]"></iron-icon>
     </template>
 
     <template is="dom-if" if="[[alt]]">
@@ -67,8 +65,12 @@ Example:
           src:  String,
           alt:  String
         },
-        _type:        '',
         _icon:        '',
+        _url:         '',
+        ready:        function ()
+                      {
+                        Polymer.dom(this).observeNodes(this._updateType);
+                      },
         _sizeChanged: function ()
                       {
                         // remove any non-numeric characters, ready to append px for styles
@@ -78,45 +80,48 @@ Example:
                         this.customStyle['--fort-icon-size'] = this.size + 'px';
                         this.updateStyles();
                       },
-        _isType:      function (type)
+        _updateType:  function ()
                       {
-                        if(!this._type)
+                        this._icon = this._url = '';
+                        if(this.getEffectiveChildren().length == 0)
                         {
-                          if(this.getEffectiveChildren().length == 0)
+                          var text = this.getEffectiveTextContent();
+                          if(text.indexOf('.') == -1)
                           {
-                            this._icon = this.getEffectiveTextContent().trim();
-                            this._type = this._icon.indexOf('.') != -1 ? 'url' : 'icon';
+                            this._icon = text;
                           }
                           else
                           {
-                            this._type = 'svg';
-                            // strip width/height from svg to allow it to scale to [[size]]
-                            this._icon = this.queryEffectiveChildren('svg');
-                            if(this._icon)
-                            {
-                              this._icon.style.width = '100%';
-                              this._icon.style.height = '100%';
-
-                              if(this._icon.hasAttribute('width'))
-                              {
-                                this._icon.removeAttribute('width');
-                              }
-
-                              if(this._icon.hasAttribute('height'))
-                              {
-                                this._icon.removeAttribute('height');
-                              }
-                            }
-                          }
-
-                          if(this._type == 'icon')
-                          {
-                            var iconSplit = this._icon.split(':');
-                            var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
-                            this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
+                            this._url = text;
                           }
                         }
-                        return this._type == type;
+                        else
+                        {
+                          // strip width/height from svg to allow it to scale to [[size]]
+                          var svg = this.queryEffectiveChildren('svg');
+                          if(svg)
+                          {
+                            svg.style.width = '100%';
+                            svg.style.height = '100%';
+
+                            if(svg.hasAttribute('width'))
+                            {
+                              svg.removeAttribute('width');
+                            }
+
+                            if(svg.hasAttribute('height'))
+                            {
+                              svg.removeAttribute('height');
+                            }
+                          }
+                        }
+
+                        if(this._icon)
+                        {
+                          var iconSplit = this._icon.split(':');
+                          var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
+                          this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
+                        }
                       }
       }
     );
