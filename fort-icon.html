@@ -86,6 +86,7 @@ Example:
         _url:         '',
         ready:        function ()
                       {
+                        this.async(this._updateType);
                         new MutationObserver(this._updateType.bind(this))
                           .observe(this, {childList: true, subtree: true, characterData: true});
                       },
