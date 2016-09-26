@@ -65,8 +65,8 @@ Example:
         is:           'fort-icon',
         properties:   {
           size:       {
-            type:     String,
-            value:    '24',
+            type:     Number,
+            value:    24,
             observer: '_sizeChanged'
           },
           background: {
@@ -93,13 +93,15 @@ Example:
         _sizeChanged: function ()
                       {
                         // remove any non-numeric characters, ready to append px for styles
-                        var defaultSize = this.properties.size.value;
+                        var defaultSize = 24;
                         this.size = (this.size || defaultSize).replace(/\D/g, '') || defaultSize;
-
-                        this.customStyle['--fort-icon-size'] = this.size + 'px';
-                        this.customStyle['--fort-icon-background-color'] = this.background;
-                        this.customStyle['--fort-icon-color'] = this.color;
-                        this.updateStyles();
+                        this.updateStyles(
+                          {
+                            '--fort-icon-size':             this.size + 'px',
+                            '--fort-icon-background-color': this.background,
+                            '--fort-icon-color':            this.color
+                          }
+                        );
                       },
         _updateType:  function ()
                       {
