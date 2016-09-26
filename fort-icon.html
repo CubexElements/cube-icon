@@ -19,31 +19,31 @@ Example:
 -->
 
 <dom-module id="fort-icon" attributes="size alt color background">
-  <style>
-    :host {
-      --fort-icon-size: 24px;
-      --iron-icon-width: var(--fort-icon-size, 24px);
-      --iron-icon-height: var(--fort-icon-size, 24px);
-
-      width: var(--fort-icon-size, 24px);
-      height: var(--fort-icon-size, 24px);
-      display: inline-flex;
-      line-height: normal;
-      border-color: var(--fort-icon-background-color);
-      background-color: var(--fort-icon-background-color);
-      color: var(--fort-icon-color);
-    }
-
-    :host ::content svg {
-      fill: currentColor;
-    }
-
-    i {
-      font-size: var(--fort-icon-size, 24px);
-    }
-  </style>
-
   <template strip-whitespace>
+    <style>
+      :host {
+        --fort-icon-size: 24px;
+        --iron-icon-width: var(--fort-icon-size, 24px);
+        --iron-icon-height: var(--fort-icon-size, 24px);
+
+        width: var(--fort-icon-size, 24px);
+        height: var(--fort-icon-size, 24px);
+        display: inline-flex;
+        line-height: normal;
+        border-color: var(--fort-icon-background-color);
+        background-color: var(--fort-icon-background-color);
+        color: var(--fort-icon-color);
+      }
+
+      :host ::content svg {
+        fill: currentColor;
+      }
+
+      i {
+        font-size: var(--fort-icon-size, 24px);
+      }
+    </style>
+
     <content select="svg"></content>
 
     <template is="dom-if" if="{{_icon}}">
