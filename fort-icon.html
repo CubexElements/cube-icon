@@ -94,7 +94,7 @@ Example:
                       {
                         // remove any non-numeric characters, ready to append px for styles
                         var defaultSize = 24;
-                        this.size = (this.size || defaultSize).replace(/\D/g, '') || defaultSize;
+                        this.size = (this.size || defaultSize) || defaultSize;
                         this.updateStyles(
                           {
                             '--fort-icon-size':             this.size + 'px',
