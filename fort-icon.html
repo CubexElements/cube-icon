@@ -46,15 +46,15 @@ Example:
 
     <content select="svg"></content>
 
-    <template is="dom-if" if="{{_icon}}">
+    <template restamp is="dom-if" if="{{_icon}}">
       <iron-icon icon="[[_icon]]"></iron-icon>
     </template>
 
-    <template is="dom-if" if="{{_url}}">
+    <template restamp is="dom-if" if="{{_url}}">
       <iron-icon src="[[_url]]"></iron-icon>
     </template>
 
-    <template is="dom-if" if="[[alt]]">
+    <template restamp is="dom-if" if="[[alt]]">
       <paper-tooltip>[[alt]]</paper-tooltip>
     </template>
   </template>
