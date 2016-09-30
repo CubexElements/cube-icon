@@ -105,7 +105,6 @@ Example:
                       },
         _updateType:  function ()
                       {
-                        this._icon = this._url = '';
                         if(this.getEffectiveChildren().length == 0)
                         {
                           var text = this.getEffectiveTextContent().trim();
@@ -120,6 +119,7 @@ Example:
                         }
                         else
                         {
+                          this._icon = this._url = '';
                           // strip width/height from svg to allow it to scale to [[size]]
                           var svg = this.queryEffectiveChildren('svg');
                           if(svg)
