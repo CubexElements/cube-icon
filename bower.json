@@ -22,7 +22,8 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.6.1",
-    "paper-tooltip": "1.1.2"
+    "paper-tooltip": "1.1.2",
+    "fort-behavior": "git@github.com:FortifiElements/fort-behavior"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

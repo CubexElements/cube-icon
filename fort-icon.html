@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../fort-behavior/fort-text-content-behavior.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -62,8 +63,8 @@ Example:
   <script>
     Polymer(
       {
-        is:           'fort-icon',
-        properties:   {
+        is:                 'fort-icon',
+        properties:         {
           size:       {
             type:     Number,
             value:    24,
@@ -82,70 +83,72 @@ Example:
           src:        String,
           alt:        String
         },
-        _icon:        '',
-        _url:         '',
-        ready:        function ()
-                      {
-                        this.async(this._updateType);
-                        new MutationObserver(this._updateType.bind(this))
-                          .observe(this, {childList: true, subtree: true, characterData: true});
-                      },
-        _sizeChanged: function ()
-                      {
-                        // remove any non-numeric characters, ready to append px for styles
-                        var defaultSize = 24;
-                        this.size = (this.size || defaultSize) || defaultSize;
-                        this.updateStyles(
-                          {
-                            '--fort-icon-size':             this.size + 'px',
-                            '--fort-icon-background-color': this.background,
-                            '--fort-icon-color':            this.color
-                          }
-                        );
-                      },
-        _updateType:  function ()
-                      {
-                        if(this.getEffectiveChildren().length == 0)
-                        {
-                          var text = this.getEffectiveTextContent().trim();
-                          if(text.indexOf('.') == -1)
-                          {
-                            this._icon = text;
-                          }
-                          else
-                          {
-                            this._url = text;
-                          }
-                        }
-                        else
-                        {
-                          this._icon = this._url = '';
-                          // strip width/height from svg to allow it to scale to [[size]]
-                          var svg = this.queryEffectiveChildren('svg');
-                          if(svg)
-                          {
-                            svg.style.width = '100%';
-                            svg.style.height = '100%';
-
-                            if(svg.hasAttribute('width'))
+        _icon:              '',
+        _url:               '',
+        attached:           function ()
                             {
-                              svg.removeAttribute('width');
-                            }
-
-                            if(svg.hasAttribute('height'))
+                              Polymer.RenderStatus.afterNextRender(this, this.__updateProperties.bind(this));
+                              new MutationObserver(this.__updateProperties.bind(this))
+                                .observe(this, {childList: true, subtree: true, characterData: true});
+                            },
+        _sizeChanged:       function ()
                             {
-                              svg.removeAttribute('height');
-                            }
-                          }
-                        }
+                              // remove any non-numeric characters, ready to append px for styles
+                              var defaultSize = 24;
+                              this.size = (this.size || defaultSize) || defaultSize;
+                              this.updateStyles(
+                                {
+                                  '--fort-icon-size':             this.size + 'px',
+                                  '--fort-icon-background-color': this.background,
+                                  '--fort-icon-color':            this.color
+                                }
+                              );
+                            },
+        __updateProperties: function ()
+                            {
+                              if(this.getEffectiveChildren().length == 0)
+                              {
+                                var text = this.getInnerText().trim();
+                                if(text.indexOf('.') == -1)
+                                {
+                                  this._icon = text;
+                                }
+                                else
+                                {
+                                  this._url = text;
+                                }
+                              }
+                              else
+                              {
+                                this._icon = this._url = '';
+                                // strip width/height from svg to allow it to scale to [[size]]
+                                var svg = this.queryEffectiveChildren('svg');
+                                if(svg)
+                                {
+                                  svg.style.width = '100%';
+                                  svg.style.height = '100%';
 
-                        if(this._icon)
-                        {
-                          var iconSplit = this._icon.split(':');
-                          var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
-                          this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
-                        }
-                      }
+                                  if(svg.hasAttribute('width'))
+                                  {
+                                    svg.removeAttribute('width');
+                                  }
+
+                                  if(svg.hasAttribute('height'))
+                                  {
+                                    svg.removeAttribute('height');
+                                  }
+                                }
+                              }
+
+                              if(this._icon)
+                              {
+                                var iconSplit = this._icon.split(':');
+                                var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
+                                this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
+                              }
+                            },
+
+        behaviors: [Polymer.FortTextContentBehavior]
       }
     );
   </script>
