@@ -19,7 +19,7 @@ Example:
 @hero hero.svg
 -->
 
-<dom-module id="fort-icon" attributes="size alt color background">
+<dom-module id="fort-icon" attributes="icon src size alt color background">
   <template strip-whitespace>
     <style>
       :host {
@@ -45,17 +45,18 @@ Example:
       }
     </style>
 
-    <content select="svg"></content>
-
-    <template restamp is="dom-if" if="{{_icon}}">
-      <iron-icon icon="[[_icon]]"></iron-icon>
+    <template is="dom-if" if="[[icon]]">
+      <iron-icon icon="[[icon]]"></iron-icon>
+    </template>
+    <template is="dom-if" if="[[src]]">
+      <iron-icon src="[[src]]"></iron-icon>
     </template>
 
-    <template restamp is="dom-if" if="{{_url}}">
-      <iron-icon src="[[_url]]"></iron-icon>
+    <template is="dom-if" if="[[!icon]]">
+      <slot></slot>
     </template>
 
-    <template restamp is="dom-if" if="[[alt]]">
+    <template is="dom-if" if="[[alt]]">
       <paper-tooltip>[[alt]]</paper-tooltip>
     </template>
   </template>
@@ -65,6 +66,12 @@ Example:
       {
         is:                 'fort-icon',
         properties:         {
+          icon:       {
+            type:     String,
+            value:    '',
+            observer: '__updateProperties'
+          },
+          src:        {type: String},
           size:       {
             type:     Number,
             value:    24,
@@ -80,22 +87,17 @@ Example:
             value:    '',
             observer: '_sizeChanged'
           },
-          src:        String,
-          alt:        String
+          alt:        {type: String}
         },
-        _icon:              '',
-        _url:               '',
-        attached:           function ()
-                            {
-                              Polymer.RenderStatus.afterNextRender(this, this.__updateProperties.bind(this));
-                              new MutationObserver(this.__updateProperties.bind(this))
-                                .observe(this, {childList: true, subtree: true, characterData: true});
-                            },
         _sizeChanged:       function ()
                             {
                               // remove any non-numeric characters, ready to append px for styles
                               var defaultSize = 24;
-                              this.size = (this.size || defaultSize) || defaultSize;
+                              var newSize = this.size || defaultSize;
+                              if(this.size !== newSize)
+                              {
+                                this.size = newSize;
+                              }
                               this.updateStyles(
                                 {
                                   '--fort-icon-size':             this.size + 'px',
@@ -106,21 +108,8 @@ Example:
                             },
         __updateProperties: function ()
                             {
-                              if(this.getEffectiveChildren().length == 0)
+                              if(this.getEffectiveChildren().length > 0)
                               {
-                                var text = this.getInnerText().trim();
-                                if(text.indexOf('.') == -1)
-                                {
-                                  this._icon = text;
-                                }
-                                else
-                                {
-                                  this._url = text;
-                                }
-                              }
-                              else
-                              {
-                                this._icon = this._url = '';
                                 // strip width/height from svg to allow it to scale to [[size]]
                                 var svg = this.queryEffectiveChildren('svg');
                                 if(svg)
@@ -140,9 +129,9 @@ Example:
                                 }
                               }
 
-                              if(this._icon)
+                              if(this.icon)
                               {
-                                var iconSplit = this._icon.split(':');
+                                var iconSplit = this.icon.split(':');
                                 var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
                                 this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
                               }

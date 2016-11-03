@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <title>fort-icon Demo</title>
-  <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../fort-icon.html">
+  <link rel="import" href="../../iron-icon/iron-icon.html">
 </head>
 <body unresolved>
 
@@ -20,16 +21,16 @@
         <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/>
       </svg>
     </fort-icon>
-    <fort-icon size="48" alt="add">icons:add</fort-icon>
-    <fort-icon background="red" color="white" size="48" alt="cake">social:cake</fort-icon>
-    <fort-icon size="48" background="orange" alt="ac unit">places:ac-unit</fort-icon>
+    <fort-icon icon="icons:add" size="48" alt="add"></fort-icon>
+    <fort-icon icon="social:cake" background="red" color="white" size="48" alt="cake"></fort-icon>
+    <fort-icon icon="places:ac-unit" size="48" background="orange" alt="ac unit"></fort-icon>
   </div>
 
   <div>
     <p>Project specific assets using <code>src</code> attribute</p>
-    <fort-icon size="48">mario.png</fort-icon>
-    <fort-icon size="48">mario_logo.svg</fort-icon>
-    <fort-icon size="48">fortifi-logo.svg</fort-icon>
+    <fort-icon src="mario.png" size="48"></fort-icon>
+    <fort-icon src="mario_logo.svg" size="48"></fort-icon>
+    <fort-icon src="fortifi-logo.svg" size="48"></fort-icon>
   </div>
 
   <div>
