@@ -43,7 +43,7 @@ Example:
       }
     </style>
 
-    <template is="dom-if" if="[[icon || src]]">
+    <template is="dom-if" if="[[_showIcon(icon,src)]]">
       <iron-icon icon="[[icon]]" src="[[src]]"></iron-icon>
     </template>
 
@@ -117,6 +117,10 @@ Example:
                            var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
                            this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
                          }
+                       },
+        _showIcon:     function (icon, src)
+                       {
+                         return icon || src;
                        },
 
         behaviors: [Polymer.FortTextContentBehavior]
