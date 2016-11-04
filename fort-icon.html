@@ -19,16 +19,12 @@ Example:
 @hero hero.svg
 -->
 
-<dom-module id="fort-icon" attributes="icon src size alt color background">
+<dom-module id="fort-icon" attributes="icon src alt color background">
   <template strip-whitespace>
     <style>
       :host {
-        --fort-icon-size: 24px;
-        --iron-icon-width: var(--fort-icon-size, 24px);
-        --iron-icon-height: var(--fort-icon-size, 24px);
-
-        width: var(--fort-icon-size, 24px);
-        height: var(--fort-icon-size, 24px);
+        width: 24px;
+        height: 24px;
         display: inline-flex;
         line-height: normal;
         border-color: var(--fort-icon-background-color);
@@ -36,25 +32,22 @@ Example:
         color: var(--fort-icon-color);
       }
 
-      :host ::content svg {
+      :host ::slotted(svg) {
         fill: currentColor;
       }
 
-      i {
-        font-size: var(--fort-icon-size, 24px);
+      :host iron-icon {
+        display: block;
+        width: 100%;
+        height: 100%;
       }
     </style>
 
-    <template is="dom-if" if="[[icon]]">
-      <iron-icon icon="[[icon]]"></iron-icon>
-    </template>
-    <template is="dom-if" if="[[src]]">
-      <iron-icon src="[[src]]"></iron-icon>
+    <template is="dom-if" if="[[icon || src]]">
+      <iron-icon icon="[[icon]]" src="[[src]]"></iron-icon>
     </template>
 
-    <template is="dom-if" if="[[!icon]]">
-      <slot></slot>
-    </template>
+    <slot></slot>
 
     <template is="dom-if" if="[[alt]]">
       <paper-tooltip>[[alt]]</paper-tooltip>
@@ -64,78 +57,67 @@ Example:
   <script>
     Polymer(
       {
-        is:                 'fort-icon',
-        properties:         {
+        is:            'fort-icon',
+        properties:    {
           icon:       {
             type:     String,
             value:    '',
-            observer: '__updateProperties'
+            observer: '_iconChanged'
           },
-          src:        {type: String},
-          size:       {
-            type:     Number,
-            value:    24,
-            observer: '_sizeChanged'
+          src:        {type: String, value: ''},
+          alt:        {type: String, value: ''},
+          color:      {
+            type:     String,
+            value:    '',
+            observer: '_styleChanged'
           },
           background: {
             type:     String,
             value:    '',
-            observer: '_sizeChanged'
-          },
-          color:      {
-            type:     String,
-            value:    '',
-            observer: '_sizeChanged'
-          },
-          alt:        {type: String}
+            observer: '_styleChanged'
+          }
         },
-        _sizeChanged:       function ()
-                            {
-                              // remove any non-numeric characters, ready to append px for styles
-                              var defaultSize = 24;
-                              var newSize = this.size || defaultSize;
-                              if(this.size !== newSize)
-                              {
-                                this.size = newSize;
-                              }
-                              this.updateStyles(
-                                {
-                                  '--fort-icon-size':             this.size + 'px',
-                                  '--fort-icon-background-color': this.background,
-                                  '--fort-icon-color':            this.color
-                                }
-                              );
-                            },
-        __updateProperties: function ()
-                            {
-                              if(this.getEffectiveChildren().length > 0)
-                              {
-                                // strip width/height from svg to allow it to scale to [[size]]
-                                var svg = this.queryEffectiveChildren('svg');
-                                if(svg)
-                                {
-                                  svg.style.width = '100%';
-                                  svg.style.height = '100%';
+        attached:      function ()
+                       {
+                         if(this.getEffectiveChildren().length > 0)
+                         {
+                           // strip width/height from svg to allow it to scale to [[size]]
+                           var svg = this.queryEffectiveChildren('svg');
+                           if(svg)
+                           {
+                             svg.style.width = '100%';
+                             svg.style.height = '100%';
 
-                                  if(svg.hasAttribute('width'))
-                                  {
-                                    svg.removeAttribute('width');
-                                  }
+                             if(svg.hasAttribute('width'))
+                             {
+                               svg.removeAttribute('width');
+                             }
 
-                                  if(svg.hasAttribute('height'))
-                                  {
-                                    svg.removeAttribute('height');
-                                  }
-                                }
-                              }
-
-                              if(this.icon)
-                              {
-                                var iconSplit = this.icon.split(':');
-                                var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
-                                this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
-                              }
-                            },
+                             if(svg.hasAttribute('height'))
+                             {
+                               svg.removeAttribute('height');
+                             }
+                           }
+                         }
+                       },
+        _styleChanged: function ()
+                       {
+                         this.updateStyles(
+                           {
+                             '--fort-icon-background-color': this.background,
+                             '--fort-icon-color':            this.color
+                           }
+                         );
+                       },
+        _iconChanged:  function ()
+                       {
+                         if(this.icon)
+                         {
+                           var iconSplit = this.icon.split(':');
+                           var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
+                           this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
+                         }
+                       },
 
         behaviors: [Polymer.FortTextContentBehavior]
       }
