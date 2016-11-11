@@ -23,13 +23,16 @@ Example:
   <template strip-whitespace>
     <style>
       :host {
-        width: 24px;
-        height: 24px;
         display: inline-flex;
         line-height: normal;
         border-color: var(--fort-icon-background-color);
         background-color: var(--fort-icon-background-color);
         color: var(--fort-icon-color);
+      }
+
+      :host([icon],[src]) {
+        width: 24px;
+        height: 24px;
       }
 
       :host ::slotted(svg) {
@@ -60,11 +63,14 @@ Example:
         is:            'fort-icon',
         properties:    {
           icon:       {
-            type:     String,
-            value:    '',
-            observer: '_iconChanged'
+            type:               String,
+            reflectToAttribute: true,
+            observer:           '_iconChanged'
           },
-          src:        {type: String, value: ''},
+          src:        {
+            type:               String,
+            reflectToAttribute: true
+          },
           alt:        {type: String, value: ''},
           color:      {
             type:     String,
