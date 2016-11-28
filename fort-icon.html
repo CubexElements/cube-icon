@@ -19,7 +19,7 @@ Example:
 @hero hero.svg
 -->
 
-<dom-module id="fort-icon" attributes="icon src alt color background">
+<dom-module id="fort-icon" attributes="icon src size alt color background">
   <template strip-whitespace>
     <style>
       :host {
@@ -30,11 +30,8 @@ Example:
         background-color: var(--fort-icon-background-color);
         color: var(--fort-icon-color);
         padding: 5px;
-      }
-
-      :host([icon],[src]) {
-        width: 24px;
-        height: 24px;
+        width: var(--fort-icon-size, 24px);
+        height: var(--fort-icon-size, 24px);
       }
 
       :host ::slotted(svg) {
@@ -74,6 +71,10 @@ Example:
             reflectToAttribute: true
           },
           alt:        {type: String, value: ''},
+          size:       {
+            type:     Number,
+            observer: '_styleChanged'
+          },
           color:      {
             type:     String,
             value:    '',
@@ -110,12 +111,15 @@ Example:
                        },
         _styleChanged: function ()
                        {
-                         this.updateStyles(
-                           {
-                             '--fort-icon-background-color': this.background,
-                             '--fort-icon-color':            this.color
-                           }
-                         );
+                         var props = {
+                           '--fort-icon-background-color': this.background,
+                           '--fort-icon-color':            this.color
+                         };
+                         if(this.size)
+                         {
+                           props['--fort-icon-size'] = this.size + 'px';
+                         }
+                         this.updateStyles(props);
                        },
         _iconChanged:  function ()
                        {
