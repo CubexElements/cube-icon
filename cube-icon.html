@@ -1,37 +1,37 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
-<link rel="import" href="../fort-behavior/fort-text-content-behavior.html">
+<link rel="import" href="../cube-behavior/cube-text-content-behavior.html">
 
 <!--
 An element providing a solution to no problem in particular.
 
 Example:
 
-    <fort-icon></fort-icon>
+    <cube-icon></cube-icon>
 
 Example:
 
-    <fort-icon>
-      <h2>Hello fort-icon</h2>
-    </fort-icon>
+    <cube-icon>
+      <h2>Hello cube-icon</h2>
+    </cube-icon>
 
 @demo demo/index.html
 @hero hero.svg
 -->
 
-<dom-module id="fort-icon" attributes="icon src size alt color background">
+<dom-module id="cube-icon" attributes="icon src size alt color background">
   <template strip-whitespace>
     <style>
       :host {
         display: inline-flex;
         line-height: normal;
         box-sizing: content-box;
-        border-color: var(--fort-icon-background-color);
-        background-color: var(--fort-icon-background-color);
-        color: var(--fort-icon-color);
+        border-color: var(--cube-icon-background-color);
+        background-color: var(--cube-icon-background-color);
+        color: var(--cube-icon-color);
         padding: 5px;
-        width: var(--fort-icon-size, 24px);
-        height: var(--fort-icon-size, 24px);
+        width: var(--cube-icon-size, 24px);
+        height: var(--cube-icon-size, 24px);
       }
 
       :host ::slotted(svg) {
@@ -59,7 +59,7 @@ Example:
   <script>
     Polymer(
       {
-        is:            'fort-icon',
+        is:            'cube-icon',
         properties:    {
           icon:       {
             type:               String,
@@ -112,12 +112,12 @@ Example:
         _styleChanged: function ()
                        {
                          var props = {
-                           '--fort-icon-background-color': this.background,
-                           '--fort-icon-color':            this.color
+                           '--cube-icon-background-color': this.background,
+                           '--cube-icon-color':            this.color
                          };
                          if(this.size)
                          {
-                           props['--fort-icon-size'] = this.size + 'px';
+                           props['--cube-icon-size'] = this.size + 'px';
                          }
                          this.updateStyles(props);
                        },
@@ -135,7 +135,7 @@ Example:
                          return icon || src;
                        },
 
-        behaviors: [Polymer.FortTextContentBehavior]
+        behaviors: [Polymer.CubeTextContentBehavior]
       }
     );
   </script>

@@ -1,6 +1,6 @@
-_[Demo and API docs](https://elements.fortifi.it/elements/fort-icon)_
+_[Demo and API docs](https://elements.cubex.io/elements/cube-icon)_
 
-##&lt;fort-icon&gt;
+##&lt;cube-icon&gt;
 
 An element providing a starting point for your own reusable Polymer elements.
 
@@ -30,4 +30,4 @@ And you can run it via:
     polyserve
 
 Once running, you can preview your element at
-`http://localhost:8080/components/fort-icon/`, where `fort-icon` is the name of the directory containing it.
+`http://localhost:8080/components/cube-icon/`, where `cube-icon` is the name of the directory containing it.
