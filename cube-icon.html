@@ -126,7 +126,7 @@ Example:
                          if(this.icon)
                          {
                            var iconSplit = this.icon.split(':');
-                           var iconGroup = iconSplit[0] == 'icons' ? 'iron' : iconSplit[0];
+                           var iconGroup = iconSplit[0] === 'icons' ? 'iron' : iconSplit[0];
                            this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
                          }
                        },
