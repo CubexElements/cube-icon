@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#1.9 - 2",
-    "iron-icon": "PolymerElements/iron-icon#1.9 - 2",
+    "iron-icon": "PolymerElements/iron-icon#1 - 2",
     "paper-tooltip": "PolymerElements/paper-tooltip#1.9 - 2",
     "cube-behavior": "CubexElements/cube-behavior"
   },
