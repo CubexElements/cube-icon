@@ -21,23 +21,13 @@
     "/node_modules/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#master",
-    "iron-icon": "PolymerElements/iron-icon#2.0-preview",
-    "paper-tooltip": "PolymerElements/paper-tooltip#2.0-preview",
+    "polymer": "Polymer/polymer#1.9 - 2",
+    "iron-icon": "PolymerElements/iron-icon#1.9 - 2",
+    "paper-tooltip": "PolymerElements/paper-tooltip#1.9 - 2",
     "cube-behavior": "CubexElements/cube-behavior"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "web-component-tester": "^4.0.0"
-  },
-  "resolutions": {
-    "iron-icon": "2.0-preview",
-    "polymer": "master",
-    "iron-ajax": "2.0-preview",
-    "iron-flex-layout": "2.0-preview",
-    "iron-selector": "2.0-preview",
-    "paper-styles": "2.0-preview",
-    "webcomponentsjs": "^v1.0.0-rc.5",
-    "iron-meta": "2.0-preview"
+    "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
+    "web-component-tester": "^6.0.0"
   }
 }
