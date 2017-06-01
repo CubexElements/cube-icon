@@ -19,7 +19,7 @@ Example:
 @hero hero.svg
 -->
 
-<dom-module id="cube-icon" attributes="icon src size alt color background">
+<dom-module id="cube-icon" attributes="icon src size alt color background round">
   <template strip-whitespace>
     <style>
       :host {
@@ -36,6 +36,10 @@ Example:
 
       :host ::slotted(svg) {
         fill: currentColor;
+      }
+
+      :host([round]) {
+        border-radius: 100%;
       }
 
       :host iron-icon {
@@ -68,6 +72,10 @@ Example:
           },
           src:        {
             type:               String,
+            reflectToAttribute: true
+          },
+          round:      {
+            type:               Boolean,
             reflectToAttribute: true
           },
           alt:        {type: String, value: ''},
