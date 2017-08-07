@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../cube-behavior/cube-text-content-behavior.html">
+<link rel="import" href="mdi.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -135,7 +136,14 @@ Example:
                          {
                            var iconSplit = this.icon.split(':');
                            var iconGroup = iconSplit[0] === 'icons' ? 'iron' : iconSplit[0];
-                           this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
+                           if(iconGroup === "mdi")
+                           {
+                             this.importHref(this.resolveUrl(iconGroup + '.html'));
+                           }
+                           else
+                           {
+                             this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
+                           }
                          }
                        },
         _showIcon:     function (icon, src)
