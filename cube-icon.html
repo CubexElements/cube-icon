@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../cube-behavior/cube-text-content-behavior.html">
 <link rel="import" href="mdi.html">
 
@@ -23,7 +24,7 @@ Example:
 <dom-module id="cube-icon" attributes="icon src size alt color background round">
   <template strip-whitespace>
     <style>
-      :host {
+       :host {
         display: inline-flex;
         line-height: normal;
         box-sizing: content-box;
@@ -35,15 +36,15 @@ Example:
         height: var(--cube-icon-size, 24px);
       }
 
-      :host ::slotted(svg) {
+       :host ::slotted(svg) {
         fill: currentColor;
       }
 
-      :host([round]) {
+       :host([round]) {
         border-radius: 100%;
       }
 
-      :host iron-icon {
+       :host iron-icon {
         display: block;
         width: 100%;
         height: 100%;
@@ -63,96 +64,103 @@ Example:
 
   <script>
     Polymer(
+    {
+      is: 'cube-icon',
+      properties:
       {
-        is:            'cube-icon',
-        properties:    {
-          icon:       {
-            type:               String,
-            reflectToAttribute: true,
-            observer:           '_iconChanged'
-          },
-          src:        {
-            type:               String,
-            reflectToAttribute: true
-          },
-          round:      {
-            type:               Boolean,
-            reflectToAttribute: true
-          },
-          alt:        {type: String, value: ''},
-          size:       {
-            type:     Number,
-            observer: '_styleChanged'
-          },
-          color:      {
-            type:     String,
-            value:    '',
-            observer: '_styleChanged'
-          },
-          background: {
-            type:     String,
-            value:    '',
-            observer: '_styleChanged'
-          }
+        icon:
+        {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_iconChanged'
         },
-        attached:      function ()
-                       {
-                         if(this.getEffectiveChildren().length > 0)
-                         {
-                           // strip width/height from svg to allow it to scale to [[size]]
-                           var svg = this.queryEffectiveChildren('svg');
-                           if(svg)
-                           {
-                             svg.style.width = '100%';
-                             svg.style.height = '100%';
+        src:
+        {
+          type: String,
+          reflectToAttribute: true
+        },
+        round:
+        {
+          type: Boolean,
+          reflectToAttribute: true
+        },
+        alt: { type: String, value: '' },
+        size:
+        {
+          type: Number,
+          observer: '_styleChanged'
+        },
+        color:
+        {
+          type: String,
+          value: '',
+          observer: '_styleChanged'
+        },
+        background:
+        {
+          type: String,
+          value: '',
+          observer: '_styleChanged'
+        }
+      },
+      attached: function()
+      {
+        if(this.getEffectiveChildren().length > 0)
+        {
+          // strip width/height from svg to allow it to scale to [[size]]
+          var svg = this.queryEffectiveChildren('svg');
+          if(svg)
+          {
+            svg.style.width = '100%';
+            svg.style.height = '100%';
 
-                             if(svg.hasAttribute('width'))
-                             {
-                               svg.removeAttribute('width');
-                             }
+            if(svg.hasAttribute('width'))
+            {
+              svg.removeAttribute('width');
+            }
 
-                             if(svg.hasAttribute('height'))
-                             {
-                               svg.removeAttribute('height');
-                             }
-                           }
-                         }
-                       },
-        _styleChanged: function ()
-                       {
-                         var props = {
-                           '--cube-icon-background-color': this.background,
-                           '--cube-icon-color':            this.color
-                         };
-                         if(this.size)
-                         {
-                           props['--cube-icon-size'] = this.size + 'px';
-                         }
-                         this.updateStyles(props);
-                       },
-        _iconChanged:  function ()
-                       {
-                         if(this.icon)
-                         {
-                           var iconSplit = this.icon.split(':');
-                           var iconGroup = iconSplit[0] === 'icons' ? 'iron' : iconSplit[0];
-                           if(iconGroup === "mdi")
-                           {
-                             this.importHref(this.resolveUrl(iconGroup + '.html'));
-                           }
-                           else
-                           {
-                             this.importHref(this.resolveUrl('../iron-icons/' + iconGroup + '-icons.html'));
-                           }
-                         }
-                       },
-        _showIcon:     function (icon, src)
-                       {
-                         return icon || src;
-                       },
+            if(svg.hasAttribute('height'))
+            {
+              svg.removeAttribute('height');
+            }
+          }
+        }
+      },
+      _styleChanged: function()
+      {
+        var props = {
+          '--cube-icon-background-color': this.background,
+          '--cube-icon-color': this.color
+        };
+        if(this.size)
+        {
+          props['--cube-icon-size'] = this.size + 'px';
+        }
+        this.updateStyles(props);
+      },
+      _iconChanged: function()
+      {
+        if(this.icon)
+        {
+          var iconSplit = this.icon.split(':');
+          var iconGroup = iconSplit[0] === 'icons' ? 'iron' : iconSplit[0];
+          if(iconGroup === "mdi")
+          {
+            this.importHref(this.resolveUrl(iconGroup + '.html'));
+          }
+          else
+          {
+            this.importHref(this.resolveUrl('../iron-icons/' + iconGroup +
+              '-icons.html'));
+          }
+        }
+      },
+      _showIcon: function(icon, src)
+      {
+        return icon || src;
+      },
 
-        behaviors: [Polymer.CubeTextContentBehavior]
-      }
-    );
+      behaviors: [Polymer.CubeTextContentBehavior]
+    });
   </script>
 </dom-module>
