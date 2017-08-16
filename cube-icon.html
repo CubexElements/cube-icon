@@ -2,6 +2,7 @@
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../cube-behavior/cube-text-content-behavior.html">
+<link rel="import" href="../cube-pagelet/cube-pagelet-content.html">
 <link rel="import" href="mdi.html">
 
 <!--
@@ -36,7 +37,9 @@ Example:
         height: var(--cube-icon-size, 24px);
       }
 
-       :host ::slotted(svg) {
+      svg,
+       ::slotted(svg) {
+        color: var(--cube-icon-color);
         fill: currentColor;
       }
 
@@ -44,15 +47,22 @@ Example:
         border-radius: 100%;
       }
 
-       :host iron-icon {
+      iron-icon {
         display: block;
         width: 100%;
         height: 100%;
       }
     </style>
 
-    <template is="dom-if" if="[[_showIcon(icon,src)]]">
-      <iron-icon icon="[[icon]]" src="[[src]]"></iron-icon>
+    <template is="dom-if" if="[[icon]]">
+      <template is="dom-if" if="[[_iconIsToken]]">
+        <template is="dom-if" if="[[_showIcon(icon,src)]]">
+          <iron-icon icon="[[icon]]" src="[[src]]"></iron-icon>
+        </template>
+      </template>
+      <template is="dom-if" if="[[!_iconIsToken]]">
+        <cube-pagelet-content html="[[icon]]"></cube-pagelet-content>
+      </template>
     </template>
 
     <slot></slot>
@@ -68,40 +78,14 @@ Example:
       is: 'cube-icon',
       properties:
       {
-        icon:
-        {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_iconChanged'
-        },
-        src:
-        {
-          type: String,
-          reflectToAttribute: true
-        },
-        round:
-        {
-          type: Boolean,
-          reflectToAttribute: true
-        },
+        icon: { type: String, observer: '_iconChanged' },
+        src: { type: String },
+        round: { type: Boolean, reflectToAttribute: true },
         alt: { type: String, value: '' },
-        size:
-        {
-          type: Number,
-          observer: '_styleChanged'
-        },
-        color:
-        {
-          type: String,
-          value: '',
-          observer: '_styleChanged'
-        },
-        background:
-        {
-          type: String,
-          value: '',
-          observer: '_styleChanged'
-        }
+        size: { type: Number, observer: '_styleChanged' },
+        color: { type: String, value: '', observer: '_styleChanged' },
+        background: { type: String, value: '', observer: '_styleChanged' },
+        _iconIsToken: { type: Boolean, value: false, computed: '_isToken(icon)' }
       },
       attached: function()
       {
@@ -138,11 +122,11 @@ Example:
         }
         this.updateStyles(props);
       },
-      _iconChanged: function()
+      _iconChanged: function(icon)
       {
-        if(this.icon)
+        if(icon && this._isToken(icon))
         {
-          var iconSplit = this.icon.split(':');
+          var iconSplit = icon.split(':');
           var iconGroup = iconSplit[0] === 'icons' ? 'iron' : iconSplit[0];
           if(iconGroup === "mdi")
           {
@@ -158,6 +142,10 @@ Example:
       _showIcon: function(icon, src)
       {
         return icon || src;
+      },
+      _isToken: function(icon)
+      {
+        return /^[a-z0-9:-]+$/i.test(icon);
       },
 
       behaviors: [Polymer.CubeTextContentBehavior]
