@@ -32,22 +32,19 @@ Example:
         border-color: var(--cube-icon-background-color);
         background-color: var(--cube-icon-background-color);
         color: var(--cube-icon-color);
+        fill: currentColor;
         padding: var(--cube-icon-padding, 5px);
         width: var(--cube-icon-size, 24px);
         height: var(--cube-icon-size, 24px);
-      }
-
-      svg,
-       ::slotted(svg) {
-        color: var(--cube-icon-color);
-        fill: currentColor;
       }
 
        :host([round]) {
         border-radius: 100%;
       }
 
-      iron-icon {
+      iron-icon,
+      svg,
+       ::slotted(svg) {
         display: block;
         width: 100%;
         height: 100%;
