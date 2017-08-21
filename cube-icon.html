@@ -51,15 +51,11 @@ Example:
       }
     </style>
 
-    <template is="dom-if" if="[[icon]]">
-      <template is="dom-if" if="[[_iconIsToken]]">
-        <template is="dom-if" if="[[_showIcon(icon,src)]]">
-          <iron-icon icon="[[icon]]" src="[[src]]"></iron-icon>
-        </template>
-      </template>
-      <template is="dom-if" if="[[!_iconIsToken]]">
-        <cube-pagelet-content html="[[_decodedIcon]]"></cube-pagelet-content>
-      </template>
+    <template is="dom-if" if="[[_iconIsToken]]">
+      <iron-icon icon="[[icon]]" src="[[src]]"></iron-icon>
+    </template>
+    <template is="dom-if" if="[[!_iconIsToken]]">
+      <cube-pagelet-content html="[[_decodedIcon]]"></cube-pagelet-content>
     </template>
 
     <slot></slot>
@@ -82,7 +78,7 @@ Example:
         size: { type: Number, observer: '_styleChanged' },
         color: { type: String, value: '', observer: '_styleChanged' },
         background: { type: String, value: '', observer: '_styleChanged' },
-        _iconIsToken: { type: Boolean, value: false, computed: '_isToken(icon)' },
+        _iconIsToken: { type: Boolean, value: false, computed: '_isToken(icon,src)' },
         _decodedIcon: { type: String, computed: '_computeDecodedIcon(_iconIsToken,icon)' }
       },
       attached: function()
@@ -120,14 +116,10 @@ Example:
         }
         this.updateStyles(props);
       },
-      _showIcon: function(icon, src)
-      {
-        return icon || src;
-      },
 
-      _isToken: function(icon)
+      _isToken: function(icon, src)
       {
-        return !!(/^[a-z0-9:-]+$/i.test(icon));
+        return src || (icon && !!(/^[a-z0-9:-]+$/i.test(icon)));
       },
       _computeDecodedIcon: function(_iconIsToken, icon)
       {
