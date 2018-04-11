@@ -1,7 +1,8 @@
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import '@webcomponents/shadycss/apply-shim.min.js'
 import '@polymer/paper-tooltip/paper-tooltip.js';
 import '@polymer/iron-icon/iron-icon.js';
 import '@kubex/cube-pagelet/cube-pagelet-content.js';
-import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import {CubeTextContentBehavior} from '@kubex/cube-behaviors/cube-text-content-behavior.js';
 
 /**
