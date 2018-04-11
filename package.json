@@ -1,0 +1,27 @@
+{
+  "name": "cube-icon",
+  "flat": true,
+  "version": "3.0.0-pre.1",
+  "description": "An element providing a solution to no problem in particular.",
+  "contributors": [
+    "Anonymous <anonymous@example.com>"
+  ],
+  "keywords": [
+    "web-component",
+    "polymer",
+    "seed"
+  ],
+  "main": "cube-icon.html",
+  "license": "MIT",
+  "homepage": "https://github.com/CubexElements/cube-icon/",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0-pre.1",
+    "@polymer/iron-icon": "^3.0.0-pre.1",
+    "@polymer/paper-tooltip": "^3.0.0-pre.1",
+    "@kubex/cube-pagelet": "^3.0.0-pre.1",
+    "@kubex/cube-behaviors": "^3.0.0-pre.1"
+  },
+  "devDependencies": {
+    "@polymer/iron-icons": "^3.0.0-pre.1"
+  }
+}

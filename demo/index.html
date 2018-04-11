@@ -1,50 +1,48 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>cube-icon Demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../cube-icon.html">
-    <link rel="import" href="../../iron-icon/iron-icon.html">
-    <link rel="import" href="../../iron-icons/iron-icons.html">
-    <link rel="import" href="../../iron-icons/social-icons.html">
-    <link rel="import" href="../../iron-icons/places-icons.html">
-  </head>
-  <body unresolved>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>cube-icon Demo</title>
+  <script type="module" src="../cube-icon.js"></script>
+  <script type="module" src="../node_modules/@polymer/iron-icons/iron-icons.js"></script>
+  <script type="module" src="../node_modules/@polymer/iron-icons/social-icons.js"></script>
+  <script type="module" src="../node_modules/@polymer/iron-icons/places-icons.js"></script>
+</head>
+<body unresolved>
 
-    <div>
-      <p>An example of <code>&lt;cube-icon&gt;</code>:</p>
+<div>
+  <p>An example of <code>&lt;cube-icon&gt;</code>:</p>
 
-      <div>
-        <p>iron-icons. Dynamically importing icon group html file</p>
-        <cube-icon style="width:48px;height:48px" alt="add">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-          <path d="M0 0h24v24H0z" fill="none"/>
-          <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/>
-        </svg>
-        </cube-icon>
-        <cube-icon icon="icons:add" style="width:48px;height:48px" alt="add"></cube-icon>
-        <cube-icon icon="social:cake" style="width:48px;height:48px" background="red" color="white"
-            alt="cake"></cube-icon>
-        <cube-icon icon="places:ac-unit" style="width:48px;height:48px" background="orange"
-            alt="ac unit"></cube-icon>
-        <cube-icon icon="places:ac-unit" style="width:48px;height:48px" background="blue"
-            alt="ac unit" round></cube-icon>
-      </div>
+  <div>
+    <p>iron-icons. Dynamically importing icon group html file</p>
+    <cube-icon style="width:48px;height:48px" alt="add">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/>
+      </svg>
+    </cube-icon>
+    <cube-icon icon="icons:add" style="width:48px;height:48px" alt="add"></cube-icon>
+    <cube-icon icon="social:cake" style="width:48px;height:48px" background="red" color="white"
+               alt="cake"></cube-icon>
+    <cube-icon icon="places:ac-unit" style="width:48px;height:48px" background="orange"
+               alt="ac unit"></cube-icon>
+    <cube-icon icon="places:ac-unit" style="width:48px;height:48px" background="blue" color="white"
+               alt="ac unit" round></cube-icon>
+  </div>
 
-      <div>
-        <p>Project specific assets using <code>src</code> attribute</p>
-        <cube-icon src="mario.png" style="width:48px;height:48px"></cube-icon>
-        <cube-icon src="mario_logo.svg" style="width:48px;height:48px"></cube-icon>
-        <cube-icon src="cubex-logo.svg" style="width:48px;height:48px"></cube-icon>
-      </div>
+  <div>
+    <p>Project specific assets using <code>src</code> attribute</p>
+    <cube-icon src="mario.png" style="width:48px;height:48px"></cube-icon>
+    <cube-icon src="mario_logo.svg" style="width:48px;height:48px"></cube-icon>
+    <cube-icon src="cubex-logo.svg" style="width:48px;height:48px"></cube-icon>
+  </div>
 
-      <div>
-        <p>Direct svg code usage</p>
+  <div>
+    <p>Direct svg code usage</p>
 
-        <cube-icon style="width:100px;height:100px">
-          <svg viewBox="0 0 770.048 889.175">
+    <cube-icon style="width:100px;height:100px">
+      <svg viewBox="0 0 770.048 889.175">
         <polygon fill="#424e63"
                  points="0 666.881 385.024 889.175 770.048 666.881 770.048 222.294 385.024 0 0 222.294 0 666.881"></polygon>
         <path fill="#394457"
@@ -56,10 +54,10 @@
         <polygon fill="#e8e9eb"
                  points="674.006 277.865 573.974 220.659 573.974 281.789 473.941 240.163 473.941 162.361 385.024 111.148 385.024 778.007 385.024 778.024 385.024 778.015 385.024 778.024 385.024 778.007 674.006 611.306 674.006 277.865"></polygon>
       </svg>
-        </cube-icon>
-      </div>
+    </cube-icon>
+  </div>
 
-    </div>
+</div>
 
-  </body>
+</body>
 </html>
