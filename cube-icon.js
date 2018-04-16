@@ -21,10 +21,8 @@ import {CubeTextContentBehavior} from '@kubex/cube-behaviors/cube-text-content-b
  @demo demo/index.html
  @hero hero.svg
  */
-class CubeIcon extends PolymerElement {
+class CubeIcon extends CubeTextContentBehavior(PolymerElement) {
   static get is() {return 'cube-icon';}
-
-  static get behaviors() {return [CubeTextContentBehavior];}
 
   static get template()
   {
