@@ -82,26 +82,24 @@ class CubeIcon extends CubeTextContentBehavior(PolymerElement) {
     }
   }
 
-  attached()
+  connectedCallback()
   {
-    if(this.getEffectiveChildren().length > 0)
+    super.connectedCallback();
+    // strip width/height from svg to allow it to scale to [[size]]
+    let svg = this.querySelector('svg');
+    if(svg)
     {
-      // strip width/height from svg to allow it to scale to [[size]]
-      let svg = this.queryEffectiveChildren('svg');
-      if(svg)
+      svg.style.width = '100%';
+      svg.style.height = '100%';
+
+      if(svg.hasAttribute('width'))
       {
-        svg.style.width = '100%';
-        svg.style.height = '100%';
+        svg.removeAttribute('width');
+      }
 
-        if(svg.hasAttribute('width'))
-        {
-          svg.removeAttribute('width');
-        }
-
-        if(svg.hasAttribute('height'))
-        {
-          svg.removeAttribute('height');
-        }
+      if(svg.hasAttribute('height'))
+      {
+        svg.removeAttribute('height');
       }
     }
   }
